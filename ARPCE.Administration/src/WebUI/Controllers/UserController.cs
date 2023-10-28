@@ -1,13 +1,15 @@
 ﻿using ARPCE.Administration.Application.Common.Interfaces;
 using ARPCE.Administration.Application.Common.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ARPCE.Administration.WebUI.Controllers;
 [ApiController]
 [Route("api/[controller]")]
-public class UserController : Controller
+public class UserController : ControllerBase
 {
     public record UserAccount {
+        
         public string username { get; set; }
         public string password { get; set; }
     }
@@ -17,14 +19,7 @@ public class UserController : Controller
         _identityService = identityService;
     }
 
-    [HttpPost]
-    /*public async Task<(Result result, string userId)> Create([FromBody] UserAccount userAccount)
-    {
-        var result = await _identityService.CreateUserAsync(userAccount.username, userAccount.password);
-        var res  = result.Result;
-        return (res, "23232");
-       }*/
-    [HttpPost]
+   [HttpPost]
     public async Task<IActionResult> Create([FromBody] UserAccount userAccount)
     {
         var result = await _identityService.CreateUserAsync(userAccount.username, userAccount.password);
@@ -35,11 +30,8 @@ public class UserController : Controller
         {
           return  BadRequest(result.Result);
         }
-        
-        
-
     }
-
+    [Authorize(Policy = "CanPurge")]
     [HttpGet]
     public async Task<IActionResult> GetUsers()
     {

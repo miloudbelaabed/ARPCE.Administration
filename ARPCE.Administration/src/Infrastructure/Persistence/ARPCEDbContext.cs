@@ -1,13 +1,13 @@
 ﻿using System.Reflection;
+using System.Reflection.Emit;
 using ARPCE.Administration.Application.Common.Interfaces;
 using ARPCE.Administration.Application.Common.Models;
 using ARPCE.Administration.Domain.Entities;
-using ARPCE.Administration.Infrastructure.Identity;
 using Duende.IdentityServer.EntityFramework.Options;
 using MediatR;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 
 namespace ARPCE.Administration.Infrastructure.Persistence;
@@ -28,9 +28,9 @@ public class ARPCEDbContext : ApiAuthorizationDbContext<ARPCEUser>, IApplication
     }
 
 
-    public DbSet<Student> Students => Set<Student>();
-    public DbSet<Course> Courses => Set<Course>();
-    public DbSet<StudentCourse> StudentCourses => Set<StudentCourse>();
+    public virtual DbSet<Student> Students { get; set; }
+    public virtual DbSet<Course> Courses { get; set; }
+    public virtual DbSet<StudentCourse> StudentCourse { get; set; }
   
 
     protected override void OnModelCreating(ModelBuilder builder)
@@ -38,6 +38,10 @@ public class ARPCEDbContext : ApiAuthorizationDbContext<ARPCEUser>, IApplication
        builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
         base.OnModelCreating(builder);
+        builder.Entity<Student>()
+       .HasMany(e => e.Courses)
+       .WithMany(e => e.Students)
+       .UsingEntity<StudentCourse>();
     }
 
 

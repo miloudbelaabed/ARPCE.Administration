@@ -23,7 +23,6 @@
 
     <ItemGroup>
       <Folder Include="Features\Users\" />
-      <Folder Include="Features\Students\Commands\DeleteStudent\" />
       <Folder Include="Features\Students\Commands\UpdateStudent\" />
     </ItemGroup>
 

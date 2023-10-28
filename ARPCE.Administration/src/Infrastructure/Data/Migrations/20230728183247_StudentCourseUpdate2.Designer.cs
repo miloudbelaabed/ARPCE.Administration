@@ -4,6 +4,7 @@ using ARPCE.Administration.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ARPCE.Administration.Infrastructure.Data.Migrations
 {
     [DbContext(typeof(ARPCEDbContext))]
-    partial class ARPCEDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230728183247_StudentCourseUpdate2")]
+    partial class StudentCourseUpdate2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -145,19 +148,19 @@ namespace ARPCE.Administration.Infrastructure.Data.Migrations
                     b.ToTable("Students");
                 });
 
-            modelBuilder.Entity("ARPCE.Administration.Domain.Entities.StudentCourse", b =>
+            modelBuilder.Entity("CourseStudent", b =>
                 {
-                    b.Property<Guid>("CourseId")
+                    b.Property<Guid>("CoursesId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("StudentId")
+                    b.Property<Guid>("StudentsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("CourseId", "StudentId");
+                    b.HasKey("CoursesId", "StudentsId");
 
-                    b.HasIndex("StudentId");
+                    b.HasIndex("StudentsId");
 
-                    b.ToTable("StudentCourse");
+                    b.ToTable("CourseStudent");
                 });
 
             modelBuilder.Entity("Duende.IdentityServer.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -438,17 +441,17 @@ namespace ARPCE.Administration.Infrastructure.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("ARPCE.Administration.Domain.Entities.StudentCourse", b =>
+            modelBuilder.Entity("CourseStudent", b =>
                 {
                     b.HasOne("ARPCE.Administration.Domain.Entities.Course", null)
                         .WithMany()
-                        .HasForeignKey("CourseId")
+                        .HasForeignKey("CoursesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("ARPCE.Administration.Domain.Entities.Student", null)
                         .WithMany()
-                        .HasForeignKey("StudentId")
+                        .HasForeignKey("StudentsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

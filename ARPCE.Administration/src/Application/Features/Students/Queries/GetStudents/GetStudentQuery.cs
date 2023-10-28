@@ -16,6 +16,7 @@ public class GetStudentsQueryHandler : IRequestHandler<GetStudentsQuery, List<St
         _studentService = studentService;
     }
     public async Task<List<StudentVm>> Handle(GetStudentsQuery request, CancellationToken cancellationToken)
+
     {
         return await _studentService.GetAllStudentsAsync();
     }

@@ -12,6 +12,7 @@ public class StudentConfiguration : IEntityTypeConfiguration<Student>
 {
     public void Configure(EntityTypeBuilder<Student> builder)
     {
+        
         builder.Property(t => t.Name)
             .HasMaxLength(55)
             .IsRequired();

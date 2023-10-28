@@ -42,11 +42,15 @@ public class IdentityService : IIdentityService
         {
             UserName = userName,
             Email = userName,
+            Created = DateTime.Now,
+            LastModified = DateTime.Now,
+            
         };
 
         var result = await _userManager.CreateAsync(user, password);
 
         return (result.ToApplicationResult(), user.Id);
+        
     }
 
     public async Task<bool> IsInRoleAsync(string userId, string role)

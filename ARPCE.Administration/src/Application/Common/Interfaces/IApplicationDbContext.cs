@@ -9,5 +9,4 @@ public interface IApplicationDbContext
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     DbSet<Student> Students { get; }
     DbSet<Course> Courses { get; }
-    DbSet<StudentCourse> StudentCourses { get; }
 }

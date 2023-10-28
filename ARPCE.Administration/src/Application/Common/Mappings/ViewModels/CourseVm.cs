@@ -4,13 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ARPCE.Administration.Domain.Entities;
-public class Course
+namespace ARPCE.Administration.Application.Common.Mappings.ViewModels;
+public class CourseVm
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
     public string Description { get; set; }
-    public ICollection<Student> Students { get; set; } = new List<Student>();
-
 
 }

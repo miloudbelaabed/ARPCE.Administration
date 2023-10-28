@@ -1,6 +1,8 @@
 using System.Reflection;
 using ARPCE.Administration.Application.Common.Mappings.ViewModels;
 using ARPCE.Administration.Application.Common.Models;
+using ARPCE.Administration.Application.Features.Courses.Commandes;
+using ARPCE.Administration.Application.Features.StudentFeatures.Commands.CreateStudent;
 using ARPCE.Administration.Domain.Entities;
 using AutoMapper;
 
@@ -9,8 +11,12 @@ public class MappingProfile : Profile
 {
     public MappingProfile()
     {
-        CreateMap<Student, StudentVm>().ReverseMap();
-        
+        CreateMap<Course, CourseVm>().ReverseMap();
+        CreateMap<Course, CreateCourseCommand>().ReverseMap();
+        CreateMap<Student, StudentVm>().ForMember(dest => dest.courses,opt => opt.MapFrom(src => src.Courses));
+
+        CreateMap<Student, CreateStudentCommand>().ReverseMap();
+
         ApplyMappingsFromAssembly(Assembly.GetExecutingAssembly());
     }
 

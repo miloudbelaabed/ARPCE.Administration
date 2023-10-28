@@ -10,6 +10,7 @@ namespace ARPCE.Administration.Application.Features.StudentFeatures.Commands.Cre
 public class CreateStudentCommand:IRequest<Guid>
 {
     public string Name { get; set; }
+    public List<Guid> CoursesIds { get; set; }
 }
 
 
@@ -24,11 +25,8 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
 
     public async Task<Guid> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
     {
-        var entity = new StudentVm
-        {
-            Name = request.Name,
-        };
-        Guid id = await _studentService.CreateStudentAsync(entity);
+       
+        Guid id = await _studentService.CreateStudentAsync(request);
 
 
 
